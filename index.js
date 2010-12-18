@@ -21,22 +21,31 @@ var Log = function(bucket) {
     return new Date().getTime();
   }
 
-  function save(level, msg) {
-    db.save(bucketName, now(), msg, { level: level });
+  function save(level, msg, callback) {
+    db.save(bucketName, now(), msg, { level: level }, callback);
   }
 
   return {
     debug: function() {
-      save('debug', formatMsg(arguments));
+      var args = Array.prototype.slice.call(arguments),
+          callback = typeof args[args.length - 1] === 'function' && args.pop();
+          
+      save('debug', formatMsg(args), callback);
     },
     info: function() {
-      save('info', formatMsg(arguments));
+      var args = Array.prototype.slice.call(arguments),
+          callback = typeof args[args.length - 1] === 'function' && args.pop();
+      
+      save('info', formatMsg(arguments), callback);
     },
     warn: function() {
-      save('warn', formatMsg(arguments));
+      var args = Array.prototype.slice.call(arguments),
+          callback = typeof args[args.length - 1] === 'function' && args.pop();
+      
+      save('warn', formatMsg(arguments), callback);
     },
     error: function() {
-      save('error', formatMsg(arguments));
+      save('error', formatMsg(arguments), callback);
     }
   }
 }
