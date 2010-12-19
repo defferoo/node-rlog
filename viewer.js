@@ -1,6 +1,6 @@
 var sys = require('sys');
 var util = require('util')
-var optparse = require('./optparse');
+var optparse = require('optparse');
 var db = require('riak-js').getClient({debug:false});
 
 var options = {
